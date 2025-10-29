@@ -11,7 +11,15 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     ''
     """
     ciphertext = ""
-    # PUT YOUR CODE HERE
+    upper_alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    lower_alphabet = "abcdefghijklmnopqrstuvwxyz"
+
+    encrypted_upper = upper_alphabet[shift:] + upper_alphabet[:shift]
+    encrypted_lower = lower_alphabet[shift:] + lower_alphabet[:shift]
+
+    encryption_table = str.maketrans(upper_alphabet + lower_alphabet,
+                                     encrypted_upper + encrypted_lower)
+    ciphertext = plaintext.translate(encryption_table)
     return ciphertext
 
 
@@ -28,5 +36,5 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     ''
     """
     plaintext = ""
-    # PUT YOUR CODE HERE
+    plaintext = encrypt_caesar(ciphertext, 26 - shift)
     return plaintext
