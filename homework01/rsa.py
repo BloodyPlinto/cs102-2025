@@ -19,7 +19,7 @@ def is_prime(n: int) -> bool:
     if n % 2 == 0:
         return False
 
-    for i in range(3, int(n ** 0.5) + 1, 2):
+    for i in range(3, int(n**0.5) + 1, 2):
         if n % i == 0:
             return False
     return True
@@ -78,7 +78,6 @@ def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[in
     return ((e, n), (d, n))
 
 
-
 def encrypt(pk: tp.Tuple[int, int], plaintext: str) -> tp.List[int]:
     key, n = pk
     cipher = [(ord(char) ** key) % n for char in plaintext]
@@ -87,7 +86,7 @@ def encrypt(pk: tp.Tuple[int, int], plaintext: str) -> tp.List[int]:
 
 def decrypt(pk: tp.Tuple[int, int], ciphertext: tp.List[int]) -> str:
     key, n = pk
-    plain = [chr((char ** key) % n) for char in ciphertext]
+    plain = [chr((char**key) % n) for char in ciphertext]
     return "".join(plain)
 
 

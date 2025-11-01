@@ -17,8 +17,7 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     encrypted_upper = upper_alphabet[shift:] + upper_alphabet[:shift]
     encrypted_lower = lower_alphabet[shift:] + lower_alphabet[:shift]
 
-    encryption_table = str.maketrans(upper_alphabet + lower_alphabet,
-                                     encrypted_upper + encrypted_lower)
+    encryption_table = str.maketrans(upper_alphabet + lower_alphabet, encrypted_upper + encrypted_lower)
     ciphertext = plaintext.translate(encryption_table)
     return ciphertext
 
