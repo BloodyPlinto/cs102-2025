@@ -1,3 +1,5 @@
+import re
+
 def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     """
     Encrypts plaintext using a Vigenere cipher.
@@ -12,7 +14,11 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     keyword_upper = keyword.upper()
     shifts = [ord(k) - ord("A") for k in keyword_upper]
     key_length = len(keyword)
-
+    russian_pattern = re.compile(r'[А-Яа-яЁё]')
+    if russian_pattern.search(plaintext):
+        raise ValueError("Only Latin letters are allowed in plaintext.")
+    if russian_pattern.search(keyword):
+        raise ValueError("Only Latin letters are allowed in keyword.")
     for i, char in enumerate(plaintext):
         if char.isalpha():
             shift = shifts[i % key_length]
