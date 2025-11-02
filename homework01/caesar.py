@@ -1,3 +1,6 @@
+import string
+
+
 def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     """
     Encrypts plaintext using a Caesar cipher.
@@ -11,8 +14,8 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     ''
     """
     ciphertext = ""
-    upper_alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    lower_alphabet = "abcdefghijklmnopqrstuvwxyz"
+    upper_alphabet = string.ascii_uppercase
+    lower_alphabet = string.ascii_lowercase
 
     encrypted_upper = upper_alphabet[shift:] + upper_alphabet[:shift]
     encrypted_lower = lower_alphabet[shift:] + lower_alphabet[:shift]
