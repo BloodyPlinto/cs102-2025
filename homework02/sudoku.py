@@ -195,22 +195,43 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     >>> check_solution(solution)
     True
     """
-    empty_grid = [["." for _ in range(9)] for _ in range(9)]
-    full_solution = solve(empty_grid)
+    grid_with_hint = [["." for _ in range(9)] for _ in range(9)]
+
+    for box in range(3):
+        numbers = [str(i) for i in range(1, 10)]
+        random.shuffle(numbers)
+        for i in range(3):
+            for j in range(3):
+                row = box * 3 + i
+                col = box * 3 + j
+                grid_with_hint[row][col] = numbers[i * 3 + j]
+
+    full_solution = solve(grid_with_hint)
 
     if full_solution is None:
-        full_solution = solve([["5", "3", ".", ".", "7", ".", ".", ".", "."]])
+        grid_with_hint = [["." for _ in range(9)] for _ in range(9)]
+        first_row = ["5", "3", "4", "6", "7", "8", "9", "1", "2"]
+        grid_with_hint[0] = first_row
+        full_solution = solve(grid_with_hint)
+
+    if full_solution is None:
+        base = [str(i) for i in range(1, 10)]
+        full_solution = []
+        for i in range(9):
+            current_row = base[i:] + base[:i]
+            full_solution.append(current_row)
 
     if N >= 81:
-        return full_solution
+        return [row[:] for row in full_solution]
     if N <= 0:
-        return empty_grid
+        return [["." for _ in range(9)] for _ in range(9)]
 
     grid = [row[:] for row in full_solution]
     positions = [(i, j) for i in range(9) for j in range(9)]
     random.shuffle(positions)
 
-    for i, j in positions[: 81 - N]:
+    cells_to_remove = min(81 - N, 81)
+    for i, j in positions[:cells_to_remove]:
         grid[i][j] = "."
     return grid
 
