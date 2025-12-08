@@ -136,7 +136,7 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
     def backtrack(current_grid):
         pos = find_empty_positions(current_grid)
         if pos is None:
-                return current_grid
+            return current_grid
 
         i, j = pos
         possible_values = find_possible_values(current_grid, pos)
