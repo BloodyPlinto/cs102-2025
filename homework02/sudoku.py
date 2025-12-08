@@ -133,24 +133,24 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
     [['5', '3', '4', '6', '7', '8', '9', '1', '2'], ['6', '7', '2', '1', '9', '5', '3', '4', '8'], ['1', '9', '8', '3', '4', '2', '5', '6', '7'], ['8', '5', '9', '7', '6', '1', '4', '2', '3'], ['4', '2', '6', '8', '5', '3', '7', '9', '1'], ['7', '1', '3', '9', '2', '4', '8', '5', '6'], ['9', '6', '1', '5', '3', '7', '2', '8', '4'], ['2', '8', '7', '4', '1', '9', '6', '3', '5'], ['3', '4', '5', '2', '8', '6', '1', '7', '9']]
     """
 
-    def backtrack(empty_positions, current_grid):
-        if not empty_positions:
-            return current_grid
+    def backtrack(current_grid):
+        pos = find_empty_positions(current_grid)
+        if pos is None:
+                return current_grid
 
-        i, j = empty_positions[0]
+        i, j = pos
+        possible_values = find_possible_values(current_grid, pos)
 
-        for num in find_possible_values(current_grid, (i, j)):
+        for num in possible_values:
             current_grid[i][j] = num
-            result = backtrack(empty_positions[1:], current_grid)
+            result = backtrack(current_grid)
             if result is not None:
                 return result
             current_grid[i][j] = "."
         return None
 
-    empty_positions = [(i, j) for i in range(9) for j in range(9) if grid[i][j] == "."]
-
     grid_copy = [row[:] for row in grid]
-    return backtrack(empty_positions, grid_copy)
+    return backtrack(grid_copy)
 
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
