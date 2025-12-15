@@ -1,5 +1,4 @@
 import abc
-
 from life import GameOfLife
 
 
