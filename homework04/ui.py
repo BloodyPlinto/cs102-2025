@@ -10,3 +10,6 @@ class UI(abc.ABC):
     @abc.abstractmethod
     def run(self) -> None:
         pass
+
+
+# этот код определяет интерфейс (в смысле абстрактного базового класса) для UI в игре "Жизнь".
