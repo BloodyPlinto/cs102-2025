@@ -1,5 +1,6 @@
 import random
 from typing import List, Tuple
+
 import pygame  # type: ignore
 
 Cell = Tuple[int, int]
