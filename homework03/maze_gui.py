@@ -42,7 +42,9 @@ def show_solution():
         tk.messagebox.showinfo("Message", "Something went wrong. Restart, please")
 
 
-def generate_maze_with_path(rows: int, cols: int) -> Tuple[List[List[Union[str, int]]], Optional[Union[Tuple[int, int], List[Tuple[int, int]]]]]:
+def generate_maze_with_path(
+    rows: int, cols: int
+) -> Tuple[List[List[Union[str, int]]], Optional[Union[Tuple[int, int], List[Tuple[int, int]]]]]:
     """
     Генерирует лабиринт с гарантированным путем от входа к выходу
     Сначала 3 попытки со случайными выходами, затем с фиксированными
