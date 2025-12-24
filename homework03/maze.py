@@ -160,9 +160,9 @@ def solve_maze(
         if encircled_exit(grid, exit_coord):
             return grid, None
 
-    # Вход 1, остальное 0
-    for x in range(len(grid)):
-        for y in range(len(grid[0])):
+    # Вход 1, остальное
+    for x, _ in enumerate(grid):
+        for y, _ in enumerate(grid[0]):
             if grid[x][y] == " ":
                 grid[x][y] = 0
 

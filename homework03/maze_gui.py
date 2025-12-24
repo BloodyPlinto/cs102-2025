@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox, ttk
-from typing import List, Union
+from typing import List, Optional, Tuple, Union
 
 from maze import add_path_to_grid, bin_tree_maze, solve_maze
 
@@ -34,20 +34,38 @@ def draw_maze(grid: List[List[Union[str, int]]], size: int = 10):
 
 
 def show_solution():
-    maze, path = solve_maze(GRID)
-    maze = add_path_to_grid(GRID, path)
-    if path:
-        draw_maze(maze, CELL_SIZE)
+    global GRID, GARANTEE
+    if GARANTEE:
+        maze_with_path = add_path_to_grid(GRID, GARANTEE)
+        draw_maze(maze_with_path, CELL_SIZE)
     else:
-        tk.messagebox.showinfo("Message", "No solutions")
+        tk.messagebox.showinfo("Message", "Something went wrong. Restart, please")
+
+
+def generate_maze_with_path(rows: int, cols: int) -> Tuple[List[List[Union[str, int]]], Optional[Union[Tuple[int, int], List[Tuple[int, int]]]]]:
+    """
+    Генерирует лабиринт с гарантированным путем от входа к выходу
+    Сначала 3 попытки со случайными выходами, затем с фиксированными
+    """
+    for _ in range(3):
+        maze = bin_tree_maze(rows, cols, random_exit=True)
+        _, path = solve_maze(maze)
+        if path:
+            return maze, path
+
+    while True:
+        maze = bin_tree_maze(rows, cols, random_exit=False)
+        _, path = solve_maze(maze)
+        if path:
+            return maze, path
 
 
 if __name__ == "__main__":
-    global GRID, CELL_SIZE
+    global GRID, CELL_SIZE, GARANTEE
     N, M = 51, 77
 
     CELL_SIZE = 10
-    GRID = bin_tree_maze(N, M)
+    GRID, GARANTEE = generate_maze_with_path(N, M)
 
     window = tk.Tk()
     window.title("Maze")
